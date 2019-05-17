@@ -15,6 +15,38 @@ describe(`get('/api/games/')`, () => {
     const response = await request(server).get('/api/games');
     for(let i = 0; i < response.length; i++){
       expect(typeof response[i]).toEqual('object');
-    }
-  })
+    };
+  });
+});
+
+describe(`post ('/api/games/')`, () => {
+  it('returns a 201 when given correct inputs', async () => {
+    const newGame = {
+      title: 'StarCraft',
+      genre: 'Strategy',
+      releaseYear: 1998
+    };
+    let response = await request(server).post('/api/games').send(newGame);
+    expect(response.status).toBe(201);
+
+    newGame = {
+      title: 'Madden',
+      genre: 'Sports'
+    };
+    response = await request(server).post('/api/games').send(newGame);
+    expect(response.status).toBe(201);
+  });
+  it('returns the added object when successful', async () => {
+    const newGame = {
+      title: 'NBA 2k',
+      genre: 'Sports'
+    };
+    const response = await request(server).post('/api/games').send(newGame);
+    expect(newGame.title).toBe(response.title)
+    expect(newGame.genre).toBe(response.genre)
+  });
+  it('returns a 422 status when given wrong inputs', async () => {
+    const response = await request(server).post('/api/games').send({});
+    expect(response.status).toBe(422);
+  });
 });
