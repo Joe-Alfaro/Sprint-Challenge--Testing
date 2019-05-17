@@ -1,17 +1,24 @@
 const db = require('../../data/dbConfig.js');
-const Games = require('./gamesModels.js');
+const Games = require('./gamesModel.js');
 
 describe('games model', () => {
+  afterEach(async () => {
+    await db('games').truncate();
+  })
   describe('add()', () => {
     it('should add game to database', async () => {
-      const result = await db('games').length+1;
-      const newGame = {
+      let beforeAdd = await db('games');
+      beforeAdd = beforeAdd.length;
+      
+      Games.add({
         title: `Madden '19`,
         genre: 'Sports'
-      }
-      await Games.insert(newGame);
+      });
+      
+      let afterAdd = await db('games');
+      afterAdd = afterAdd.length;
 
-      expect(await db('games').length).toEqual(result)
+      expect(afterAdd).toBe(beforeAdd+1)
     })
   });
 })
