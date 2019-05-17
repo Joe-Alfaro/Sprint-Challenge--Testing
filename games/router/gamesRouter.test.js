@@ -21,7 +21,7 @@ describe(`get('/api/games/')`, () => {
 
 describe(`post ('/api/games/')`, () => {
   it('returns a 201 when given correct inputs', async () => {
-    const newGame = {
+    let newGame = {
       title: 'StarCraft',
       genre: 'Strategy',
       releaseYear: 1998
@@ -42,8 +42,8 @@ describe(`post ('/api/games/')`, () => {
       genre: 'Sports'
     };
     const response = await request(server).post('/api/games').send(newGame);
-    expect(newGame.title).toBe(response.title)
-    expect(newGame.genre).toBe(response.genre)
+    expect(newGame.title).toBe(JSON.parse(response.text).title)
+    expect(newGame.genre).toBe(JSON.parse(response.text).genre)
   });
   it('returns a 422 status when given wrong inputs', async () => {
     const response = await request(server).post('/api/games').send({});
