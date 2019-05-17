@@ -1,11 +1,10 @@
 const request = require('supertest');
-//const server = require('./server');
-const db = require('../data/dbConfig');
+const server = require('./server');
 
 describe(`get('/')`, () => {
   it('returns a 200 status code', async () => {
-    let response = await request(server).get('/');
-    expect(res.status).toBe(200);
+    const response = await request(server).get('/');
+    expect(response.status).toBe(200);
   });
 
   it('returns JSON data', async () => {
