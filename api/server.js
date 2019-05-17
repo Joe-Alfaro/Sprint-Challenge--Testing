@@ -1,6 +1,6 @@
 const express = require('express');
 const server = express();
-//const gamesRouter = require('../games/router/gamesRouter');
+const gamesRouter = require('../games/router/gamesRouter');
 
 server.use(express.json());
 
@@ -12,6 +12,6 @@ server.get('/', (request, response) => {
     });
 });
 
-//server.use('/api/games', gamesRouter);
+server.use('/api/games', gamesRouter);
 
 module.exports = server;
